@@ -17,8 +17,10 @@ builder.Services.Configure<MongoDbConfiguration>(
 	builder.Configuration.GetSection(nameof(MongoDbConfiguration)));
 
 // Add services to the container.
-builder.Services.AddSingleton<IUserRepository, UserMongoRepository>();
 builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IUserRepository, UserMongoRepository>();
+builder.Services.AddSingleton<IMovieService, MovieService>();
+builder.Services.AddSingleton<IMovieRepository, MovieMongoRepository>();
 
 builder.Services
 	.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -38,6 +40,8 @@ builder.Services
 					Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
 		};
 	});
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
