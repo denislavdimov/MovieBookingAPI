@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MovieBooking.DL\MovieBooking.DL.csproj" />
+  </ItemGroup>
+
 </Project>
