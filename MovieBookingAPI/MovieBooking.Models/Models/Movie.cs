@@ -2,7 +2,9 @@
 {
 	public class Movie
 	{
-        public int MovieId { get; set; }
-        public string MovieName { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string Showtime { get; set; }
     }
 }
