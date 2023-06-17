@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MovieBooking.BL.Interfaces;
+using MovieBooking.BL.Services;
+using MovieBooking.Models.Models;
 using MovieBooking.Models.Requests;
+using MovieBooking.Models.Requests.MovieRequests;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -22,11 +25,17 @@ namespace MovieBookingAPI.Controllers
 			_configuration = configuration;
 		}
 
+		[ProducesResponseType(StatusCodes.Status201Created, Type = typeof(User))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[AllowAnonymous]
 		[HttpPost("Add")]
-		public async Task Add([FromBody] AddUserRequest user)
+		public async Task<IActionResult> Add([FromBody] AddUserRequest user)
 		{
+			if (user == null) return BadRequest(user);
+
 			await _userService.Add(user);
+
+			return Ok(user);
 		}
 
 		[ProducesResponseType(StatusCodes.Status200OK)]
