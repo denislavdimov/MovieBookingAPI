@@ -10,6 +10,8 @@ using MovieBooking.DL.Interfaces;
 using MovieBooking.DL.Repositories.MongoDB;
 using MovieBooking.Models.Configuration;
 using System.Text;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,8 @@ builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IUserRepository, UserMongoRepository>();
 builder.Services.AddSingleton<IMovieService, MovieService>();
 builder.Services.AddSingleton<IMovieRepository, MovieMongoRepository>();
+builder.Services.AddSingleton<IBookingService, BookingService>();
+builder.Services.AddSingleton<IBookingRepository, BookingMongoRepository>();
 
 builder.Services
 	.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -35,9 +39,8 @@ builder.Services
 			ValidAudience = builder.Configuration["Jwt:Audience"],
 			ValidIssuer = builder.Configuration["Jwt:Issuer"],
 
-			IssuerSigningKey =
-				new SymmetricSecurityKey(
-					Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+			IssuerSigningKey = new SymmetricSecurityKey(
+				Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
 		};
 	});
 
@@ -64,13 +67,17 @@ builder.Services.AddSwaggerGen(x =>
 
 	};
 
-	x.AddSecurityDefinition(
-		jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+	x.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
 	x.AddSecurityRequirement(new OpenApiSecurityRequirement()
 	{
 		{ jwtSecurityScheme, Array.Empty<string>() }
 	});
 });
+
+builder.Services.AddFluentValidationAutoValidation()
+	.AddFluentValidationClientsideAdapters();
+builder.Services
+	.AddValidatorsFromAssemblyContaining(typeof(Program));
 
 BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
 
@@ -82,6 +89,8 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
 
 app.UseHttpsRedirection();
 

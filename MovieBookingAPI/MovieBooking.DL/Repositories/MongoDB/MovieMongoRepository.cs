@@ -27,9 +27,9 @@ namespace MovieBooking.DL.Repositories.MongoDB
 			await _movie.InsertOneAsync(movie);
 		}
 
-		public async Task Delete(Guid movieId)
+		public async Task Delete(Movie movieId)
 		{
-			await _movie.DeleteOneAsync(m => m.Id == movieId);
+			await _movie.DeleteOneAsync(m => m.Id == movieId.Id);
 		}
 
 		public async Task<IEnumerable<Movie>> GetAll()
@@ -37,9 +37,10 @@ namespace MovieBooking.DL.Repositories.MongoDB
 			return await _movie.Find(m => m.Id != null).ToListAsync();
 		}
 
-		public async Task<Movie?> GetById(Guid movieId)
+		public async Task<Movie?> GetById(Movie movieId)
 		{
-			var movie = await _movie.Find(movie => movie.Id == movieId).FirstOrDefaultAsync();
+			var movie = await _movie.Find(movie => movie.Id == movieId.Id).FirstOrDefaultAsync();
+
 			return movie;
 		}
 	}
