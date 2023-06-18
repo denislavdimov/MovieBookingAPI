@@ -111,11 +111,7 @@ namespace MovieBooking.Test.MovieServiceTests
 		{
 			var movieId = new Guid("0c18f6ae-a16c-477e-b267-9184c4819800");
 
-			var movie = new DeleteMovieRequest()
-			{
-				Id = movieId,
-				Name = "Oppenheimer"
-			};
+			var movie = new DeleteMovieRequest() { Id = movieId };
 
 			var movieToDelete = Movies.First(m => m.Id == movieId);
 

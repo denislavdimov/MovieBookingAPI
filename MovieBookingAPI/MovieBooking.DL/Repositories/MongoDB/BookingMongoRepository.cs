@@ -31,5 +31,10 @@ namespace MovieBooking.DL.Repositories.MongoDB
 		{
 			await _booking.DeleteOneAsync(t => t.Id == ticketId);
 		}
+
+		public async Task<IEnumerable<Booking>> GetAllTickets()
+		{
+			return await _booking.Find(m => m.Id != null).ToListAsync();
+		}
 	}
 }

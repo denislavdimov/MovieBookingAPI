@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieBooking.BL.Interfaces;
+using MovieBooking.BL.Services;
 using MovieBooking.Models.Models;
 using MovieBooking.Models.Requests.BookingRequests;
 
@@ -19,7 +20,7 @@ namespace MovieBookingAPI.Controllers
 
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Booking))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		[Authorize]
+		//[Authorize]
 		[HttpPost("BookTicket")]
 		public async Task<IActionResult> BookTicket([FromBody] BookMovieTicketRequest ticketRequest)
 		{
@@ -41,6 +42,19 @@ namespace MovieBookingAPI.Controllers
 			await _bookingService.CancelBooking(cancelRequest);
 
 			return Ok(cancelRequest);
+		}
+
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Booking))]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize]
+		[HttpGet("GetAllTickets")]
+		public async Task<IActionResult> GetAllTickets()
+		{
+			var result = await _bookingService.GetAllTickets();
+
+			if (result != null && result.Any()) return Ok(result);
+
+			return NotFound(result);
 		}
 	}
 }

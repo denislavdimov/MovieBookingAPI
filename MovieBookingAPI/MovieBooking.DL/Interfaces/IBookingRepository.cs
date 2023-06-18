@@ -6,5 +6,6 @@ namespace MovieBooking.DL.Interfaces
 	{
 		public Task BookTicket(Booking ticket);
 		public Task CancelBooking(Guid ticketId);
+		public Task<IEnumerable<Booking>> GetAllTickets();
 	}
 }

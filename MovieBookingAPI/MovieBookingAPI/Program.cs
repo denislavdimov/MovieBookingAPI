@@ -14,8 +14,17 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using MovieBookingAPI.Extensions;
 using MovieBookingAPI.HealthChecks;
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
+
+var logger = new LoggerConfiguration()
+	.Enrich.FromLogContext()
+	.WriteTo.Console(theme: AnsiConsoleTheme.Literate)
+	.CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.AddSerilog(logger);
 
 builder.Services.Configure<MongoDbConfiguration>(
 	builder.Configuration.GetSection(nameof(MongoDbConfiguration)));
