@@ -15,7 +15,7 @@ namespace MovieBookingAPI.Validators.BookingRequestsValidator
 				.NotEmpty()
 				.NotNull()
 				//.Matches("^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$\r\n")
-				.MaximumLength(10);
+				.Length(10);
 
 			RuleFor(b => b.Seats)
 				.NotEmpty()
