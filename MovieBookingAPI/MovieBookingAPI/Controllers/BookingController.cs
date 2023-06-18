@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieBooking.BL.Interfaces;
-using MovieBooking.BL.Services;
 using MovieBooking.Models.Models;
 using MovieBooking.Models.Requests.BookingRequests;
 
@@ -20,7 +19,7 @@ namespace MovieBookingAPI.Controllers
 
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Booking))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		//[Authorize]
+		[Authorize]
 		[HttpPost("BookTicket")]
 		public async Task<IActionResult> BookTicket([FromBody] BookMovieTicketRequest ticketRequest)
 		{

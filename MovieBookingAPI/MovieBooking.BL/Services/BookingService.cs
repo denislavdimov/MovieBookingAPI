@@ -1,5 +1,4 @@
-﻿using Amazon.Runtime.Internal.Util;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using MovieBooking.BL.Interfaces;
 using MovieBooking.DL.Interfaces;
@@ -31,7 +30,7 @@ namespace MovieBooking.BL.Services
 
 			ticket.DateAndTime = DateTime.UtcNow;
 			ticket.Id = Guid.NewGuid();
-			
+
 			var movie = await _movieService.GetById(ticketRequest.Movie);
 			var ticketPrice = movie.Price * ticketRequest.Seats;
 
