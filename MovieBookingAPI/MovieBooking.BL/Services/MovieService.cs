@@ -30,7 +30,7 @@ namespace MovieBooking.BL.Services
 		{
 			var movieToDelete = _mapper.Map<Movie>(deleteRequest);
 
-			await _movieRepository.Delete(movieToDelete);
+			await _movieRepository.Delete(movieToDelete.Id);
 		}
 
 		public async Task<IEnumerable<Movie>> GetAll()
@@ -42,7 +42,7 @@ namespace MovieBooking.BL.Services
 		{
 			var movieToGet = _mapper.Map<Movie>(getByIdMovieRequest);
 
-			return await _movieRepository.GetById(movieToGet);
+			return await _movieRepository.GetById(movieToGet.Id);
 		}
 	}
 }

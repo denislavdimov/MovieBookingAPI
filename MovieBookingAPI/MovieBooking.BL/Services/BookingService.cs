@@ -16,8 +16,8 @@ namespace MovieBooking.BL.Services
 			IMovieService movieService)
 		{
 			_bookingRepository = bookingRepository;
-			_movieService = movieService;
 			_mapper = mapper;
+			_movieService = movieService;
 		}
 
 		public async Task BookTicket(BookMovieTicketRequest ticketRequest)
@@ -43,7 +43,7 @@ namespace MovieBooking.BL.Services
 		{
 			var ticketCancel = _mapper.Map<Booking>(ticketId);
 
-			await _bookingRepository.CancelBooking(ticketCancel);
+			await _bookingRepository.CancelBooking(ticketCancel.Id);
 		}
 	}
 }

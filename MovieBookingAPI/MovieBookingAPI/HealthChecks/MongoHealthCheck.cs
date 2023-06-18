@@ -7,13 +7,10 @@ namespace MovieBookingAPI.HealthChecks
 {
 	public class MongoHealthCheck : IHealthCheck
 	{
-		private readonly IConfiguration _configuration;
 		private readonly IOptionsMonitor<MongoDbConfiguration> _mongoConfig;
 
-		public MongoHealthCheck(IConfiguration configuration,
-			IOptionsMonitor<MongoDbConfiguration> mongoConfig)
+		public MongoHealthCheck(IOptionsMonitor<MongoDbConfiguration> mongoConfig)
 		{
-			_configuration = configuration;
 			_mongoConfig = mongoConfig;
 		}
 
