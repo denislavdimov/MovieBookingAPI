@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using Amazon.Runtime.Internal.Util;
+using AutoMapper;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Moq;
 using MovieBooking.BL.Interfaces;
 using MovieBooking.BL.Services;
@@ -17,6 +19,7 @@ namespace MovieBooking.Test.BookingServiceTests
 		private readonly Mock<IMovieService> _movieService;
 		private readonly BookingService _bookingService;
 		private readonly IMapper _mapper;
+		private readonly Mock<ILogger<BookingService>> _logger;
 
 		private IList<Booking> Bookings = new List<Booking>()
 		{
@@ -57,7 +60,9 @@ namespace MovieBooking.Test.BookingServiceTests
 			var mapper = mockMapper.CreateMapper();
 			_mapper = mapper;
 
-			_bookingService = new BookingService(_bookingRepository.Object, _mapper, _movieService.Object);
+			_logger = new Mock<ILogger<BookingService>>();	
+
+			_bookingService = new BookingService(_bookingRepository.Object, _mapper, _movieService.Object, _logger.Object);
 		}
 
 		[Fact]
@@ -79,8 +84,7 @@ namespace MovieBooking.Test.BookingServiceTests
 			{
 				Movie = new GetByIdMovieRequest()
 				{
-					Id = new Guid("0c18f6ae-a16c-477e-b267-9184c4819742"),
-					Name = "John Wick IV"
+					Id = new Guid("0c18f6ae-a16c-477e-b267-9184c4819742")
 				},
 				FullName = "Dimov Booking",
 				PhoneNumber = "1111111119",

@@ -1,4 +1,5 @@
-﻿using MovieBooking.Models.Requests.BookingRequests;
+﻿using MovieBooking.Models.Models;
+using MovieBooking.Models.Requests.BookingRequests;
 
 namespace MovieBooking.BL.Interfaces
 {
@@ -6,5 +7,6 @@ namespace MovieBooking.BL.Interfaces
 	{
 		public Task BookTicket(BookMovieTicketRequest ticketRequest);
 		public Task CancelBooking(CancelBookingRequest ticketId);
+		public Task<IEnumerable<Booking>> GetAllTickets();
 	}
 }
