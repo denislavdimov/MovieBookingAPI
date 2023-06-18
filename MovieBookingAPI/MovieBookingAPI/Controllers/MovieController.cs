@@ -59,7 +59,7 @@ namespace MovieBookingAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Movie))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		//[Authorize]
+		[Authorize]
 		[HttpGet("GetById")]
 		public async Task<IActionResult> GetById([FromQuery] GetByIdMovieRequest getByIdMovieRequest)
 		{

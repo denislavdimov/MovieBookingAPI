@@ -1,11 +1,10 @@
-﻿using MovieBooking.Models.Models;
-using MovieBooking.Models.Requests.MovieRequests;
+﻿using MovieBooking.Models.Requests.MovieRequests;
 
 namespace MovieBooking.Models.Requests.BookingRequests
 {
 	public class BookMovieTicketRequest
 	{
-        public GetByIdMovieRequest Movie { get; set; }
+		public GetByIdMovieRequest Movie { get; set; }
 		public string FullName { get; set; }
 		public string PhoneNumber { get; set; }
 		public int Seats { get; set; }

@@ -1,5 +1,4 @@
-﻿using Amazon.Runtime.Internal.Util;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -60,7 +59,7 @@ namespace MovieBooking.Test.BookingServiceTests
 			var mapper = mockMapper.CreateMapper();
 			_mapper = mapper;
 
-			_logger = new Mock<ILogger<BookingService>>();	
+			_logger = new Mock<ILogger<BookingService>>();
 
 			_bookingService = new BookingService(_bookingRepository.Object, _mapper, _movieService.Object, _logger.Object);
 		}
@@ -104,7 +103,7 @@ namespace MovieBooking.Test.BookingServiceTests
 			_movieService.Setup(a => a.GetById(bookingTicketRequest.Movie))
 				.Returns(() => Task.FromResult(movie));
 
-			_bookingRepository.Setup(b => b.BookTicket(It.IsAny<Booking>())).Callback(() =>	
+			_bookingRepository.Setup(b => b.BookTicket(It.IsAny<Booking>())).Callback(() =>
 			Bookings.Add(bookingTicket)).Returns(Task.CompletedTask);
 
 			await _bookingService.BookTicket(bookingTicketRequest);
@@ -120,7 +119,7 @@ namespace MovieBooking.Test.BookingServiceTests
 
 			var booking = new CancelBookingRequest()
 			{
-				Id= bookingId
+				Id = bookingId
 			};
 
 			var bookingToCancel = Bookings.First(m => m.Id == bookingId);
