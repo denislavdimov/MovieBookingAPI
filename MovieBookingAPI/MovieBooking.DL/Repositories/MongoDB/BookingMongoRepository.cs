@@ -27,9 +27,9 @@ namespace MovieBooking.DL.Repositories.MongoDB
 			await _booking.InsertOneAsync(ticket);
 		}
 
-		public async Task CancelBooking(Booking ticketId)
+		public async Task CancelBooking(Guid ticketId)
 		{
-			await _booking.DeleteOneAsync(t => t.Id == ticketId.Id);
+			await _booking.DeleteOneAsync(t => t.Id == ticketId);
 		}
 	}
 }

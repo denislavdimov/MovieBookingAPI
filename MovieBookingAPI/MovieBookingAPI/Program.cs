@@ -12,6 +12,8 @@ using MovieBooking.Models.Configuration;
 using System.Text;
 using FluentValidation.AspNetCore;
 using FluentValidation;
+using MovieBookingAPI.Extensions;
+using MovieBookingAPI.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,6 +81,11 @@ builder.Services.AddFluentValidationAutoValidation()
 builder.Services
 	.AddValidatorsFromAssemblyContaining(typeof(Program));
 
+builder.Services
+	.AddHealthChecks()
+	.AddCheck<MongoHealthCheck>("MongoDB");
+
+
 BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
 
 var app = builder.Build();
@@ -92,9 +99,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 
-app.UseHttpsRedirection();
-
 app.UseAuthorization();
+
+app.RegisterHealthCheck();
+
+app.UseHttpsRedirection();
 
 app.MapControllers();
 
